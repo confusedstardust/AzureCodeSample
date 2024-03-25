@@ -37,5 +37,34 @@ namespace SharePointCodeSample.Services
                 siteUrl, clientId, clientSecret);
             return clientContext;
         }
+        
+        public async Task<List<MyModel>> GetItemsToBeSynced(ILogger log)
+        {
+            var result = new List<MyModel>();
+            var camlQuery = new CamlQuery();
+            camlQuery.ViewXml = String.Format(@"
+                    <View Scope='RecursiveAll'><Query><Where>
+                        <And>
+                            <Eq><FieldRef Name='attr'/><Value Type='Text'>{0}</Value></Eq>
+                            <Leq><FieldRef Name='attr2'/><Value Type='DateTime' IncludeTimeValue='FALSE'>{1}</Value></Leq>
+                        </And>
+                    </Where></Query>
+                    <ViewFields>
+                        <FieldRef Name='attr3'/>
+                    </ViewFields></View>
+                ", statusBeforeSending, DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+            var listItems = await this.FetchData(ListName, camlQuery, log);
+            foreach (var item in listItems)
+            {
+                result.Add(new PtdrData
+                {
+                    Id = item["Id"] != null ? item["Id"].ToString() : string.Empty,
+                    Code = item["Code"] != null ? item["Code"].ToString() : string.Empty,
+                    Term = item["Term"] != null ? item["Term"].ToString() : string.Empty
+                });
+            }
+
+            return result;
+        }
     }
 }
