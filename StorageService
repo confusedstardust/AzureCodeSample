@@ -61,7 +61,7 @@ namespace AzureCodeSample.Service
             }
         }
 
-
+//write byte[] content to storage
         public async Task<bool> WriteContentToStorage(string path, string content, ILogger logger)
         {
             try
@@ -79,6 +79,15 @@ namespace AzureCodeSample.Service
                 logger.LogInformation($"Erroe occured {ex.Message}");
                 return false;
             }
+        }
+// write string content to Storage
+        public void WriteBlob(string content,string filename)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("connectionString"));
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer outputContainer = blobClient.GetContainerReference("mycontainer");
+            CloudBlockBlob outputBlobReference = outputContainer.GetBlockBlobReference($"{filename}.txt");
+            outputBlobReference.UploadTextAsync(content);
         }
 
         public async Task<ResponseValue> DeleteFile(string url, ILogger logger)
