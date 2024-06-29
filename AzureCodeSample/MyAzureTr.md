@@ -58,8 +58,6 @@
 
 组件：转发请求的负载均衡器[^公共负载均衡器]+多个vm+连接vm与db的负载均衡器[^内部负载均衡器，使用私有IP地址] +多个DB[^两个：主备模式  多个：多活模式]
 
-![image-20231101101500103](C:\Users\a435698\AppData\Roaming\Typora\typora-user-images\image-20231101101500103.png)
-
 但是会面对一个安全问题：一致开放端口会导致不安全，所以需要划分子网[^NSG-网络安全组]（子网1：对外开放80         子网2：对web服务开放1433）
 
 
@@ -210,10 +208,6 @@ blob生命周期
 
 可以建很多的共享，一个共享最多5T
 
-https://storagenomaa4xswyxze.file.core.windows.net/lg-poc-compare
-
-本地使用：\\storagenomaa4xswyxze.file.core.windows.net\\lg-poc-compare
-
 
 
 ---
@@ -335,21 +329,6 @@ Azure 资源特定事件发生后，自动触发对应该事件的处理机制
 海量数据并发传递服务-----------实时数据传输服务
 
 事件中心结合流分析作业服务----------实时数据分析
-
-
-
-
-
-
-
-- 检查正常工作
-
-udtedenhe@easthomebjrt.partner.onmschina.cn
-
-3Ghlmcl.
-
-
-
 
 
 
